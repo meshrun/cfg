@@ -4,7 +4,7 @@ defaults = [
     name: "helloworld",
     app:  "hello",
     image: [
-        repository: "weaveworks/helloworld",
+        repository: "meshrun/helloworld",
         tag: "v1"
     ]
 ]
