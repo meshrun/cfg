@@ -1,9 +1,9 @@
 package k8s.core.v1;
 
 import groovy.lang.Closure;
-import io.meshrun.cfg.BaseObject;
+import io.meshrun.cfg.K8sResource;
 
-public class Service extends BaseObject {
+public class Service extends K8sResource {
 
     @Override
     protected String apiVersion() {

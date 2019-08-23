@@ -10,16 +10,17 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class BaseObject extends GroovyObjectSupport {
+public abstract class K8sResource extends GroovyObjectSupport {
 
     protected Closure body;
     protected String name;
     private Object json;
 
-    protected BaseObject(){
+    protected K8sResource(){
     }
 
     protected abstract String apiVersion();
@@ -27,20 +28,20 @@ public abstract class BaseObject extends GroovyObjectSupport {
         return this.getClass().getSimpleName();
     }
 
-    public BaseObject(Closure body) {
+    public K8sResource(Closure body) {
         this();
         this.body = body;
         prepare();
     }
 
-    public BaseObject(String name, Closure body) {
+    public K8sResource(String name, Closure body) {
         this(body);
         this.name = name;
         prepare();
     }
 
     public void prepare() {
-        Map<String, Object> jsonTypeMeta = new TreeMap<String, Object>(){{
+        Map<String, Object> jsonTypeMeta = new HashMap<String, Object>(){{
             put("apiVersion", apiVersion());
             put("kind", kind());
         }};
