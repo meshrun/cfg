@@ -50,6 +50,10 @@ public abstract class BaseObject extends GroovyObjectSupport {
 
         this.json = new JsonSlurper().parseText(builder.toString());
         Object metadata = InvokerHelper.getProperty(json, "metadata");
+        if(metadata == null) {
+            metadata = new TreeMap<String, Object>();
+            InvokerHelper.setProperty(json, "metadata", metadata);
+        }
         InvokerHelper.setProperty(metadata, "name", this.name);
     }
 
