@@ -1,5 +1,5 @@
 res = { values ->
-  [
+  return [
     new k8s.apps.v1.Deployment("${values.name}-dep", {
       spec {
         template {
@@ -8,7 +8,10 @@ res = { values ->
           }
           spec {
             containers([
-              image: "${values.image.repository}:${values.image.tag}"
+              {
+                name  values.app
+                image "${values.image.repository}:${values.image.tag}"
+              }
             ])
           }
         }
