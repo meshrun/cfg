@@ -10,7 +10,7 @@ defaults = [
 ]
 
 res = require(resources)
-res(defaults).each { r ->
+for(Object r: res(defaults)) {
   println("---")
   print(r)
 }
