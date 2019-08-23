@@ -7,7 +7,7 @@ def redisLabels = {
 def deployment = new k8s.apps.v1.Deployment("redis-master", {
     metadata {
         labels {
-            app 'redis'
+            app "redis"
         }
     }
     spec {
@@ -23,10 +23,10 @@ def deployment = new k8s.apps.v1.Deployment("redis-master", {
         spec {
             containers([
                 {
-                    name "master"
+                    name  "master"
                     image "redis"
                     resources {
-                        cpu "100m"
+                        cpu    "100m"
                         memory "100Mi"
                     }
                     ports([
