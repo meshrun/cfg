@@ -1,0 +1,9 @@
+.gradle/
+.idea/
+OpenJDK8U-jre_x64_linux_hotspot_8u212b04.tar.gz
+build/
+bundle/
+jdk8u212-b04-jre/
+mrcfg
+out/
+warp-packer
