@@ -1,10 +1,17 @@
 package io.meshrun.cfg
 
-import groovy.io.FileType
 import groovy.transform.CompileStatic
+import io.meshrun.cfg.cmds.Generate
+
+import picocli.CommandLine
 
 @CompileStatic
-class Runner {
+@CommandLine.Command(name = "mrcfg",
+        mixinStandardHelpOptions = true,
+        version = "v0.1.1",
+        description = "Configurations as Codes.",
+        subcommands = [Generate.class])
+class Runner implements Runnable {
 
     static require = { Class<Script> cls ->
         return cls.newInstance().run()
@@ -14,26 +21,18 @@ class Runner {
         return Json2Hcl.Lib.INSTANCE.json_to_hcl(json, json.getBytes().size())
     }
 
-    static void main(String[] args) {
-        String dir = new File(args[0]).getParentFile().getAbsolutePath()
-        String name = new File(args[0]).getName()
-        def binding = new Binding()
-        binding.setVariable("SCRIPT_HOME", dir)
-        binding.setVariable("require", require)
-        binding.setVariable("apply", require) // alias
-        binding.setVariable("json2hcl", json2hcl)
+    private CommandLine cmdline
 
-        def urls = new ArrayList<String>()
-        urls.add(dir)
-        try {
-            new File(dir + "/libs").eachFileRecurse(FileType.FILES, {
-                String path = it.getAbsolutePath()
-                if (path.endsWith(".jar")) {
-                    urls.add(path)
-                }
-            })
-        }catch(ignored) {}
-        new GroovyScriptEngine(urls.toArray() as String[]).run(name, binding)
+    static void main(String[] args) {
+        def app = new Runner()
+        def cmdline = new CommandLine(app)
+        app.cmdline = cmdline
+        cmdline.execute(args)
+    }
+
+    @Override
+    void run() {
+        cmdline.usage(System.out)
     }
 
 }
