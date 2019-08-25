@@ -7,3 +7,6 @@ jdk8u212-b04-jre/
 mrcfg
 out/
 warp-packer
+
+golang/libjson2hcl.h
+golang/libjson2hcl.so
