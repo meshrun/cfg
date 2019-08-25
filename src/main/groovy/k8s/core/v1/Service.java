@@ -1,7 +1,7 @@
 package k8s.core.v1;
 
 import groovy.lang.Closure;
-import io.meshrun.cfg.K8sResource;
+import k8s.K8sResource;
 
 public class Service extends K8sResource {
 

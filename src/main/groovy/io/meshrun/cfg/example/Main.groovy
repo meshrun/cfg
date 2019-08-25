@@ -1,3 +1,4 @@
+@k8s.ClosureArray
 package io.meshrun.cfg.example
 
 def redisLabels = {
@@ -31,11 +32,10 @@ def deployment = new k8s.apps.v1.Deployment("redis-master", {
                         cpu "100m"
                         memory "100Mi"
                     }
-                    ports([
-                        {
-                            containerPort 6379
-                        }
-                    ])
+                    ports {
+                        - { containerPort 6379 }
+                        - { containerPort 6379 }
+                    }
                 }
             ])
         }

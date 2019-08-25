@@ -1,6 +1,7 @@
-package io.meshrun.cfg;
+package k8s;
 
 import groovy.json.JsonBuilder;
+import io.meshrun.cfg.Json2Hcl;
 import groovy.json.JsonDelegate;
 import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;

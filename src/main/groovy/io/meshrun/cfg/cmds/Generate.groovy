@@ -3,6 +3,9 @@ package io.meshrun.cfg.cmds
 import groovy.io.FileType
 import groovy.transform.CompileStatic
 import io.meshrun.cfg.Runner
+import k8s.ClosureArray
+import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.ASTTransformationCustomizer
 import picocli.CommandLine
 
 @CompileStatic
@@ -34,6 +37,11 @@ class Generate implements Runnable {
                 }
             })
         }catch(ignored) {}
-        new GroovyScriptEngine(urls.toArray() as String[]).run(name, binding)
+        def engine = new GroovyScriptEngine(urls.toArray() as String[])
+        def config = new CompilerConfiguration()
+
+        config.addCompilationCustomizers(new ASTTransformationCustomizer(ClosureArray))
+        engine.setConfig(config)
+        engine.run(name, binding)
     }
 }

@@ -7,12 +7,12 @@ res = { values ->
             app values.app
           }
           spec {
-            containers([
-              {
-                name  values.app
+            containers {
+              - {
+                name values.app
                 image "${values.image.repository}:${values.image.tag}"
               }
-            ])
+            }
           }
         }
       }
