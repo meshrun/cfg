@@ -47,7 +47,7 @@ def compose = new compose.v2.File({
       restart "always"
     }
     postgres {
-      image    'postgres:9.5-alpine'
+      image 'postgres:9.5-alpine'
       environment envs
       volumes([
         '$PWD/postgres-data:/var/lib/postgresql/data'
