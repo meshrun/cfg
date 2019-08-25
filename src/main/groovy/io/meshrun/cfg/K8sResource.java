@@ -45,8 +45,10 @@ public abstract class K8sResource extends GroovyObjectSupport {
             put("apiVersion", apiVersion());
             put("kind", kind());
         }};
-        Map<String, Object> jsonBody = JsonDelegate.cloneDelegateAndGetContent(body);
-        jsonTypeMeta.putAll(jsonBody);
+        if(body != null) {
+            Map<String, Object> jsonBody = JsonDelegate.cloneDelegateAndGetContent(body);
+            jsonTypeMeta.putAll(jsonBody);
+        }
         JsonBuilder builder = new JsonBuilder(jsonTypeMeta);
 
         this.json = new JsonSlurper().parseText(builder.toString());
