@@ -67,6 +67,11 @@ public abstract class K8sResource extends GroovyObjectSupport {
         return yaml.dump(yaml.load(JsonOutput.toJson(this.json)));
     }
 
+    public String toHcl() {
+        String input = JsonOutput.toJson(this.json);
+        return Json2Hcl.Lib.INSTANCE.json_to_hcl(input, input.getBytes().length);
+    }
+
     public void setProperty(String name, Object value) {
         if(name.equals("apiVersion")) {
             return;
