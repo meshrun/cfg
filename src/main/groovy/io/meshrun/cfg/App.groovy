@@ -8,8 +8,8 @@ import picocli.CommandLine
 @CompileStatic
 @CommandLine.Command(name = "mrcfg",
     mixinStandardHelpOptions = true,
-    version = "v0.2.0",
-    description = "Configurations as Codes.",
+    version = "v0.3.0",
+    description = "Configuration as Code.",
     subcommands = [GenerateCommand.class, TestCommand.class])
 class App implements Runnable {
 
