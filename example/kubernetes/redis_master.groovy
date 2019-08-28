@@ -22,7 +22,7 @@ def deployment = new k8s.apps.v1.Deployment("redis-master", {
     }
     spec {
       containers {
-        -{
+        - {
           name "master"
           image "redis"
           resources {
@@ -30,7 +30,7 @@ def deployment = new k8s.apps.v1.Deployment("redis-master", {
             memory "100Mi"
           }
           ports {
-            -{
+            - {
               containerPort 6379
               name "redis"
             }

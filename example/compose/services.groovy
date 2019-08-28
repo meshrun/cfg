@@ -37,10 +37,11 @@ compose = new compose.v2.File({
     }
     adhoc_worker redash_service >> {
       command "worker"
-      environment([
-          "QUEUES=queries",
-          "WORKERS_COUNT=2"
-      ] + envs)
+      environment {
+        - "QUEUES=queries"
+        - "WORKERS_COUNT=2"
+        + envs
+      }
     }
     redis {
       image "redis:5.0-alpine"
@@ -49,22 +50,22 @@ compose = new compose.v2.File({
     postgres {
       image 'postgres:9.5-alpine'
       environment envs
-      volumes([
-          '$PWD/postgres-data:/var/lib/postgresql/data'
-      ])
+      volumes {
+        - '$PWD/postgres-data:/var/lib/postgresql/data'
+      }
       restart "always"
     }
     nginx {
       image "redash/nginx:latest"
-      ports([
-          "80:80"
-      ])
-      depends_on([
-          "server"
-      ])
-      links([
-          "server:redash"
-      ])
+      ports {
+        -"80:80"
+      }
+      depends_on {
+        -"server"
+      }
+      links
+        - "server:redash"
+      }
       restart "always"
     }
   }
