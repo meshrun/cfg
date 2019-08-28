@@ -10,7 +10,7 @@ redash_service = {
   restart  'always'
 }
 
-def compose = new compose.v2.File({
+compose = new compose.v2.File({
   services {
     server redash_service >> {
       command "server"
@@ -69,5 +69,3 @@ def compose = new compose.v2.File({
     }
   }
 })
-
-print(compose)

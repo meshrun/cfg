@@ -1,7 +1,10 @@
 package k8s
 
 import groovy.transform.CompileStatic
+import groovy.transform.TypeChecked
 import org.codehaus.groovy.ast.ASTNode
+import org.codehaus.groovy.ast.AnnotationNode
+import org.codehaus.groovy.ast.ClassNode
 import org.codehaus.groovy.ast.CodeVisitorSupport
 import org.codehaus.groovy.ast.expr.*
 import org.codehaus.groovy.ast.stmt.BlockStatement
@@ -73,6 +76,7 @@ class ClosureArrayTransformation implements ASTTransformation {
             return
         }
         for(cn in source.getAST().getClasses()) {
+            cn.addAnnotation(new AnnotationNode(new ClassNode(TypeChecked.class)))
             for(mn in cn.methods) {
                 mn.code.visit(new CodeVisitorSupport(){
                     @Override

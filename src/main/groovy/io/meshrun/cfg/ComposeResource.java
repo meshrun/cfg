@@ -10,9 +10,8 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public abstract class ComposeResource extends GroovyObjectSupport {
 
@@ -31,7 +30,7 @@ public abstract class ComposeResource extends GroovyObjectSupport {
     }
 
     private void prepare() {
-        Map<String, Object> jsonMeta = new HashMap<String, Object>(){{
+        Map<String, Object> jsonMeta = new LinkedHashMap<String, Object>(){{
             put("version", version());
         }};
         Map<String, Object> jsonBody = JsonDelegate.cloneDelegateAndGetContent(body);

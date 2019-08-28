@@ -1,25 +1,25 @@
 package k8s;
 
 import groovy.json.JsonBuilder;
-import io.meshrun.cfg.Json2Hcl;
-import groovy.json.JsonDelegate;
 import groovy.json.JsonOutput;
 import groovy.json.JsonSlurper;
 import groovy.lang.Closure;
+import groovy.lang.DelegatesTo;
 import groovy.lang.GroovyObjectSupport;
+import io.meshrun.cfg.Json2Hcl;
+import k8s.typechecked.TypedResource;
 import org.codehaus.groovy.runtime.InvokerHelper;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public abstract class K8sResource extends GroovyObjectSupport {
 
     protected Closure body;
     protected String name;
-    private Object json;
+    protected Object json;
 
     protected K8sResource(){
     }
@@ -35,27 +35,28 @@ public abstract class K8sResource extends GroovyObjectSupport {
         prepare();
     }
 
-    public K8sResource(String name, Closure body) {
+    public K8sResource(String name, @DelegatesTo(value = TypedResource.class) Closure body) {
         this(body);
         this.name = name;
         prepare();
     }
 
     public void prepare() {
-        Map<String, Object> jsonTypeMeta = new HashMap<String, Object>(){{
+        Map<String, Object> jsonTypeMeta = new LinkedHashMap<String, Object>(){{
             put("apiVersion", apiVersion());
             put("kind", kind());
         }};
+        Map<String, Object> jsonBody = new LinkedHashMap<>();
         if(body != null) {
-            Map<String, Object> jsonBody = JsonDelegate.cloneDelegateAndGetContent(body);
-            jsonTypeMeta.putAll(jsonBody);
+            jsonBody = JsonDelegate.cloneDelegateAndGetContent(body);
         }
+        jsonTypeMeta.putAll(jsonBody);
         JsonBuilder builder = new JsonBuilder(jsonTypeMeta);
 
         this.json = new JsonSlurper().parseText(builder.toString());
         Object metadata = InvokerHelper.getProperty(json, "metadata");
         if(metadata == null) {
-            metadata = new TreeMap<String, Object>();
+            metadata = new LinkedHashMap<String, Object>();
             InvokerHelper.setProperty(json, "metadata", metadata);
         }
         InvokerHelper.setProperty(metadata, "name", this.name);

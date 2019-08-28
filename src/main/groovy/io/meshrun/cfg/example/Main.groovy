@@ -9,6 +9,8 @@ def redisLabels = {
 
 def deployment = new k8s.apps.v1.Deployment("redis-master", {
     metadata {
+        name "a"
+        namespace "default"
         labels {
             app 'redis'
         }
@@ -42,5 +44,5 @@ def deployment = new k8s.apps.v1.Deployment("redis-master", {
     }
 })
 
-deployment.metadata["namespace"] = "default"
+//deployment.metadata["namespace"] = "default"
 print(deployment)
