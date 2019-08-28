@@ -5,17 +5,17 @@ import k8s.K8sResource;
 
 public class ConfigMap extends K8sResource {
 
-    @Override
-    protected String apiVersion() {
-        return "v1";
-    }
+  @Override
+  protected String apiVersion() {
+    return "v1";
+  }
 
-    public ConfigMap(Closure body) {
-        super(body);
-    }
+  public ConfigMap(Closure body) {
+    super(body);
+  }
 
-    public ConfigMap(String name, Closure body) {
-        super(name, body);
-    }
+  public ConfigMap(String name, Closure body) {
+    super(name, body);
+  }
 
 }

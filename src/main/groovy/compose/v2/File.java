@@ -5,12 +5,12 @@ import io.meshrun.cfg.ComposeResource;
 
 public class File extends ComposeResource {
 
-    @Override
-    protected String version() {
-        return "2";
-    }
+  @Override
+  protected String version() {
+    return "2";
+  }
 
-    public File(Closure body) {
-        super(body);
-    }
+  public File(Closure body) {
+    super(body);
+  }
 }

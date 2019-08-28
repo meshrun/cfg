@@ -6,23 +6,33 @@ import k8s.typechecked.TypedMetadata;
 
 public class TypedKubernetesCluster {
 
-    public void metadata(@DelegatesTo(TypedMetadata.class) Closure metadata) {}
-    public void spec(@DelegatesTo(Spec.class) Closure spec) {}
+  public void metadata(@DelegatesTo(TypedMetadata.class) Closure metadata) {
+  }
 
-    public class Spec {
+  public void spec(@DelegatesTo(Spec.class) Closure spec) {
+  }
 
-        public class Topology {
+  public class Spec {
 
-            public class Workers {
-                public void count(Integer value) {}
-                public void class_(String name) {}
-            }
+    public class Topology {
 
-            public void workers(@DelegatesTo(Workers.class) Closure workers) {}
+      public class Workers {
+        public void count(Integer value) {
         }
 
-        public void topology(@DelegatesTo(Topology.class) Closure topology) {}
-        public void distribution(String version) {}
+        public void class_(String name) {
+        }
+      }
+
+      public void workers(@DelegatesTo(Workers.class) Closure workers) {
+      }
     }
+
+    public void topology(@DelegatesTo(Topology.class) Closure topology) {
+    }
+
+    public void distribution(String version) {
+    }
+  }
 
 }

@@ -1,55 +1,55 @@
 new k8s.apps.v1.Deployment("mysql", {
-    metadata {
-        labels {
-            app "mysql"
-        }
+  metadata {
+    labels {
+      app "mysql"
     }
-    spec {
-        selector {
-            matchLabels {
-                app "mysql"
-            }
-        }
-        strategy {
-            type "Recreate"
-        }
-        template {
-            metadata {
-                app "mysql"
-            }
-            spec {
-                containers([
-                    {
-                        image "mysql:5.6"
-                        name  "mysql"
-                        env([
-                            {
-                                name "MYSQL_ROOT_PASSWORD"
-                                valueFrom {
-                                    secretKeyRef {
-                                        name "mysql-pass"
-                                        key  "password"
-                                    }
-                                }
-                            }
-                        ])
-                        ports([
-                            {
-                                containerPort 3306
-                                name "mysql"
-                            }
-                        ])
-                        volumeMounts([
-                            {
-                                name      "mysql-persistent-storage"
-                                mountPath "/var/lib/mysql"
-                            }
-                        ])
+  }
+  spec {
+    selector {
+      matchLabels {
+        app "mysql"
+      }
+    }
+    strategy {
+      type "Recreate"
+    }
+    template {
+      metadata {
+        app "mysql"
+      }
+      spec {
+        containers([
+            {
+              image "mysql:5.6"
+              name "mysql"
+              env([
+                  {
+                    name "MYSQL_ROOT_PASSWORD"
+                    valueFrom {
+                      secretKeyRef {
+                        name "mysql-pass"
+                        key "password"
+                      }
                     }
-                ])
+                  }
+              ])
+              ports([
+                  {
+                    containerPort 3306
+                    name "mysql"
+                  }
+              ])
+              volumeMounts([
+                  {
+                    name "mysql-persistent-storage"
+                    mountPath "/var/lib/mysql"
+                  }
+              ])
             }
-        }
+        ])
+      }
     }
+  }
 })
 
 /*

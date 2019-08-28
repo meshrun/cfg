@@ -2,18 +2,18 @@
 package io.meshrun.cfg.example
 
 def myapp = new vks.vmware.com.v1.KubernetesCluster("my-application", {
-    metadata {
-        namespace "default"
+  metadata {
+    namespace "default"
+  }
+  spec {
+    topology {
+      workers {
+        count 3
+        class_ "small"
+      }
     }
-    spec {
-        topology {
-            workers {
-                count  3
-                class_ "small"
-            }
-        }
-        distribution "1.14.1"
-    }
+    distribution "1.14.1"
+  }
 })
 
 print(myapp)
