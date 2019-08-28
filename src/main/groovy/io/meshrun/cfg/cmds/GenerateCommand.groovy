@@ -21,16 +21,8 @@ class GenerateCommand implements Runnable {
 
   @Override
   void run() {
-    String dir = new File(this.scriptFile).getParentFile().getAbsolutePath()
+    String dir = new File(this.scriptFile).getAbsoluteFile().getParentFile().getAbsolutePath()
     String name = new File(this.scriptFile).getName()
-
-    /*
-    def binding = new Binding()
-    binding.setVariable("SCRIPT_HOME", dir)
-    binding.setVariable("require", App.require)
-    binding.setVariable("apply", App.require) // alias
-    binding.setVariable("json2hcl", App.json2hcl)
-    */
 
     def urls = new ArrayList<String>()
     urls.add(dir)
@@ -52,6 +44,6 @@ class GenerateCommand implements Runnable {
     config.addCompilationCustomizers(imports)
     config.addCompilationCustomizers(new ASTTransformationCustomizer(ClosureArray))
     engine.setConfig(config)
-    engine.run(name, new Binding())
+    print(engine.run(name, new Binding()))
   }
 }

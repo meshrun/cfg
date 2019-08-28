@@ -31,7 +31,7 @@ class TestCommand implements Runnable {
 
   @Override
   void run() {
-    String dir = new File(this.specFile).getParentFile().getAbsolutePath()
+    String dir = new File(this.specFile).getAbsoluteFile().getParentFile().getAbsolutePath()
     String name = new File(this.specFile).getName()
     String className = name - ".groovy"
 
@@ -79,7 +79,7 @@ class TestCommand implements Runnable {
     } as List
 
     classes*.mixin(ApplyResource)
-    def runner = new EmbeddedSpecRunner(throwFailure: false)
+    def runner = new EmbeddedSpecRunner(throwFailure: true)
     Result result = runner.runClasses(classes)
     if (result.failureCount != 0) {
       result.failures.each {
